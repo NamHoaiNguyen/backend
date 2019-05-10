@@ -76,10 +76,15 @@ router.post('/login', (req, res, next) => {
             bcrypt
               .compare(req.body.password, user.password)
               .then((result) => {
+        // if two password match
+              if(result){
                 res.json({
                     result,
                     message: ' Loggin in ...'
-                   });
+                  });
+                }else{
+                  next(new Error('Invalid login'));
+                }
               });
 
          }else{

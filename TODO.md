@@ -11,3 +11,6 @@ Add form-based cookie authentication to app.
 	*  hash password with bcrypt
 	*  insert into db
 
+*  Login user with POST /auth/login
+        *  check if email in db
+        *  compare password with hashed password in db
