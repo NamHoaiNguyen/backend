@@ -64,4 +64,31 @@ if(validUser(req.body)) {
   }
 });
 
+router.post('/login', (req, res, next) => {
+  if(validUser(req.body)){
+    //ceck in DB
+    User
+       .getOneByEmail(req.body.email)
+       .then(user => {
+         console.log('user', user);
+         if(user) {
+         //compare pass with hash pass
+            bcrypt
+              .compare(req.body.password, user.password)
+              .then((result) => {
+                res.json({
+                    result,
+                    message: ' Loggin in ...'
+                   });
+              });
+
+         }else{
+           next(new Error('Invalid login'));
+         }
+       });
+    }else{
+        next(new Error('Invalid login'));
+  }
+});
+
 module.exports = router;
